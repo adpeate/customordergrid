@@ -3,7 +3,7 @@ class HusseyCoding_CustomOrderGrid_Model_Observer extends Varien_Event_Observer
 {
     public function adminhtmlCoreBlockAbstractPrepareLayoutBefore($observer)
     {
-        if ($observer->getBlock()->getType() == 'adminhtml/widget_grid_massaction'):
+        if ($observer->getBlock()->getType() == 'adminhtml/widget_grid_massaction' && Mage::app()->getRequest()->getControllerName() == "sales_order"):
             $action = Mage::app()->getRequest()->getActionName();
             $block = strpos($action, 'export') !== false && Mage::app()->getLayout()->getBlock('ANONYMOUS_0') ? Mage::app()->getLayout()->getBlock('ANONYMOUS_0') : Mage::app()->getLayout()->getBlock('sales_order.grid');
             if ($block):
@@ -55,7 +55,7 @@ class HusseyCoding_CustomOrderGrid_Model_Observer extends Varien_Event_Observer
     
     public function adminhtmlSalesOrderGridCollectionLoadBefore($observer)
     {
-        if ($this->_isEnabled()):
+        if ($this->_isEnabled() && Mage::app()->getRequest()->getControllerName() == "sales_order"):
 
 			if(Mage::registry('sales_cust_grid_loaded')){
 				return;
