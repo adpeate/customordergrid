@@ -56,6 +56,13 @@ class HusseyCoding_CustomOrderGrid_Model_Observer extends Varien_Event_Observer
     public function adminhtmlSalesOrderGridCollectionLoadBefore($observer)
     {
         if ($this->_isEnabled()):
+
+			if(Mage::registry('sales_cust_grid_loaded')){
+				return;
+			}
+		
+			Mage::register('sales_cust_grid_loaded', true);
+			
             $selected = Mage::getStoreConfig('customordergrid/configure/columnsorder');
             $selected = isset($selected) && $selected ? explode(',', $selected) : false;
             
